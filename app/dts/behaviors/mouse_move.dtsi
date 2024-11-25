@@ -1,0 +1,8 @@
+/ {
+    behaviors {
+        /omit-if-no-ref/ mmv: mouse_move {
+            compatible = "zmk,behavior-mouse-move";
+            #binding-cells = <1>;
+        };
+    };
+};
