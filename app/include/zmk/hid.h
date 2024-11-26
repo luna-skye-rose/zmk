@@ -11,8 +11,8 @@
 
 #include <zmk/keys.h>
 #if IS_ENABLED(CONFIG_ZMK_MOUSE)
-#include <zmk/mouse.h>
 #endif // IS_ENABLED(CONFIG_ZMK_MOUSE)
+#include <zmk/mouse.h>
 
 #include <dt-bindings/zmk/hid_usage.h>
 #include <dt-bindings/zmk/hid_usage_pages.h>

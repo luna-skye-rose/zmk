@@ -383,6 +383,9 @@ static zmk_mod_flags_t explicit_buttons = 0;
     }
 
 int zmk_hid_mouse_button_press(zmk_mouse_button_t button) {
+    if (button >= ZMK_HID_MOUSE_NUM_BUTTONS) {
+        return -EINVAL;
+    }
 
     explicit_button_counts[button]++;
     LOG_DBG("Button %d count %d", button, explicit_button_counts[button]);
