@@ -25,7 +25,8 @@ static int behavior_mouse_move_init(const struct device *dev) { return 0; };
 static int on_keymap_binding_pressed(struct zmk_behavior_binding *binding,
                                      struct zmk_behavior_binding_event event) {
     LOG_DBG("position %d keycode 0x%02X", event.position, binding->param1);
-    zmk_hid_mouse_move(1, 2);
+    zmk_hid_mouse_move(10, 20);
+    zmk_endpoints_send_mouse_report();
     return raise_zmk_keycode_state_changed_from_encoded(binding->param1 + 1, true, event.timestamp);
 }
 
@@ -33,6 +34,7 @@ static int on_keymap_binding_released(struct zmk_behavior_binding *binding,
                                       struct zmk_behavior_binding_event event) {
     LOG_DBG("position %d keycode 0x%02X", event.position, binding->param1);
     zmk_hid_mouse_move(0, 0);
+    zmk_endpoints_send_mouse_report();
     return raise_zmk_keycode_state_changed_from_encoded(binding->param1 + 1, false,
                                                         event.timestamp);
 }
