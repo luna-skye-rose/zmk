@@ -13,8 +13,6 @@
 #include <zmk/behavior.h>
 #include <zmk/event_manager.h>
 #include <zmk/events/keycode_state_changed.h>
-#include <zmk/hid.h>
-#include <zmk/mouse.h>
 
 LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 
@@ -25,16 +23,14 @@ static int behavior_mouse_move_init(const struct device *dev) { return 0; };
 static int on_keymap_binding_pressed(struct zmk_behavior_binding *binding,
                                      struct zmk_behavior_binding_event event) {
     LOG_DBG("position %d keycode 0x%02X", event.position, binding->param1);
-    struct zmk_mouse_displacement_t displacement = {.d_x = 1, .d_y = 2};
-    zmk_hid_mouse_move(displacement);
+    zmk_hid_mouse_move(1, 2);
     return raise_zmk_keycode_state_changed_from_encoded(binding->param1 + 1, true, event.timestamp);
 }
 
 static int on_keymap_binding_released(struct zmk_behavior_binding *binding,
                                       struct zmk_behavior_binding_event event) {
     LOG_DBG("position %d keycode 0x%02X", event.position, binding->param1);
-    struct zmk_mouse_displacement_t displacement = {.d_x = 0, .d_y = 0};
-    zmk_hid_mouse_move(displacement);
+    zmk_hid_mouse_move(0, 0);
     return raise_zmk_keycode_state_changed_from_encoded(binding->param1 + 1, false,
                                                         event.timestamp);
 }

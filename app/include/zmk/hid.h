@@ -237,10 +237,10 @@ struct zmk_hid_consumer_report {
     struct zmk_hid_consumer_report_body body;
 } __packed;
 
-struct zmk_mouse_displacement_t {
-    int8_t d_x;
-    int8_t d_y;
-};
+// struct zmk_mouse_displacement_t {
+//     int8_t d_x;
+//     int8_t d_y;
+// };
 
 #if IS_ENABLED(CONFIG_ZMK_MOUSE)
 struct zmk_hid_mouse_report_body {
@@ -288,7 +288,7 @@ int zmk_hid_mouse_button_press(zmk_mouse_button_t button);
 int zmk_hid_mouse_button_release(zmk_mouse_button_t button);
 void zmk_hid_mouse_clear(void);
 
-int zmk_hid_mouse_move(zmk_mouse_displacement_t displacement);
+int zmk_hid_mouse_move(int8_t d_x, int8_t d_y);
 
 int zmk_hid_mouse_buttons_press(zmk_mouse_button_flags_t buttons);
 int zmk_hid_mouse_buttons_release(zmk_mouse_button_flags_t buttons);

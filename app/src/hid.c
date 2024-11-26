@@ -432,9 +432,9 @@ int zmk_hid_mouse_buttons_release(zmk_mouse_button_flags_t buttons) {
 }
 void zmk_hid_mouse_clear(void) { memset(&mouse_report.body, 0, sizeof(mouse_report.body)); }
 
-int zmk_hid_mouse_move(zmk_mouse_displacement_t displacement) {
-    mouse_report.body.d_x = displacement.d_x;
-    mouse_report.body.d_y = displacement.d_y;
+int zmk_hid_mouse_move(int8_t d_x, int8_t d_y) {
+    mouse_report.body.d_x = d_x;
+    mouse_report.body.d_y = d_y;
     return 0;
 }
 
