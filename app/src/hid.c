@@ -28,7 +28,7 @@ static uint8_t keys_held = 0;
 #if IS_ENABLED(CONFIG_ZMK_MOUSE)
 
 static struct zmk_hid_mouse_report mouse_report = {.report_id = ZMK_HID_REPORT_ID_MOUSE,
-                                                   .body = {.buttons = 0}};
+                                                   .body = {.buttons = 0, .d_x = 0, .d_y = 0}};
 
 #endif // IS_ENABLED(CONFIG_ZMK_MOUSE)
 
@@ -383,9 +383,6 @@ static zmk_mod_flags_t explicit_buttons = 0;
     }
 
 int zmk_hid_mouse_button_press(zmk_mouse_button_t button) {
-    if (button >= ZMK_HID_MOUSE_NUM_BUTTONS) {
-        return -EINVAL;
-    }
 
     explicit_button_counts[button]++;
     LOG_DBG("Button %d count %d", button, explicit_button_counts[button]);
@@ -432,20 +429,20 @@ int zmk_hid_mouse_buttons_release(zmk_mouse_button_flags_t buttons) {
 }
 void zmk_hid_mouse_clear(void) { memset(&mouse_report.body, 0, sizeof(mouse_report.body)); }
 
+int zmk_hid_mouse_move(zmk_mouse_displacement_t displacement) {
+    mouse_report.body.d_x = displacement.d_x;
+    mouse_report.body.d_y = displacement.d_y;
+    return 0;
+}
+
 #endif // IS_ENABLED(CONFIG_ZMK_MOUSE)
 
-struct zmk_hid_keyboard_report *zmk_hid_get_keyboard_report(void) {
-    return &keyboard_report;
-}
+struct zmk_hid_keyboard_report *zmk_hid_get_keyboard_report(void) { return &keyboard_report; }
 
-struct zmk_hid_consumer_report *zmk_hid_get_consumer_report(void) {
-    return &consumer_report;
-}
+struct zmk_hid_consumer_report *zmk_hid_get_consumer_report(void) { return &consumer_report; }
 
 #if IS_ENABLED(CONFIG_ZMK_MOUSE)
 
-struct zmk_hid_mouse_report *zmk_hid_get_mouse_report(void) {
-    return &mouse_report;
-}
+struct zmk_hid_mouse_report *zmk_hid_get_mouse_report(void) { return &mouse_report; }
 
 #endif // IS_ENABLED(CONFIG_ZMK_MOUSE)
