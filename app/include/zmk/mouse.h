@@ -10,8 +10,3 @@
 
 typedef uint8_t zmk_mouse_button_flags_t;
 typedef uint16_t zmk_mouse_button_t;
-
-struct zmk_mouse_displacement_t {
-    int8_t d_x;
-    int8_t d_y;
-};
